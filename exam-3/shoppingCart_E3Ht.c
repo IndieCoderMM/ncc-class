@@ -1,7 +1,7 @@
 // Shopping Cart Program
-// Exam 3
+// Exam-3
 // Hein Thant
-// Sep 4, 2022
+// Sep-4-2022
 
 
 #include <stdio.h>
@@ -31,6 +31,13 @@ int main() {
 	int balance = 0;
 	char cart[100];
 	char command;
+	int totalCost = 0;
+	int getCmd = 1;
+	int login = 0;
+	int inumToDel;
+	char yesNo;
+	char newItems[100];
+
 	printf("Shopping Cart Program");
 	printf("\nAuthor: hthant | Lang: C | Date: Sep 4, 2022");
 
@@ -44,6 +51,12 @@ int main() {
 	scanf("%s", &name);
 	printf("\n>>Enter Your Wallet Password: ");
 	scanf("%s", &password);
+	while (getStrLen(password) < 6) {
+		printf("\n[!] Weak Password.");
+		printf("\n[i] Password should contain at least 6 characters.");
+		printf("\n>>Enter Your Wallet Password: ");
+		scanf("%s", &password);
+	}
 	printf("\n>>Enter Your Balance: ");
 	scanf("%d", &balance);
 	while (balance <= 0) {
@@ -56,16 +69,10 @@ int main() {
 	printf("\n*Available Fresh & Delicious Fruits*");
 	displayProducts(PRODUCTS, PRICES);
 	printf("\n[i] Use CODE to add into Shopping Cart.");
-	printf("\n[i] e.g., ooaabbmma");
+	printf("\n[i] e.g., aaabbmo");
 	printf("\n>>Enter Your Shopping List: ");
 	scanf("%s", &cart);
-
-	int totalCost = 0;
-	int getCmd = 1;
-	int login = 0;
-	int inumToDel;
-	char yesNo;
-	char newItems[100];
+	
 	do {
 		totalCost = displayCart(cart, PRODUCTS, PRICES);
 		if (totalCost == 0) printf("\n[i] Please add some items into cart.");
@@ -92,6 +99,7 @@ int main() {
 				printf("\n>>Enter ITEM CODES to Add: ");
 				scanf("%s", &newItems);
 				addItems(&cart[0], &newItems[0]);
+				printf("\n[!] Added %d new items into cart.", getStrLen(newItems));
 				break;
 			case 'p':
 			case 'P':
@@ -111,6 +119,7 @@ int main() {
 						displayCart(cart, PRODUCTS, PRICES);
 						getCmd = 0;
 					} else {
+						printf("\n[%] Exiting from store...");
 						getCmd = 0;
 					}
 				}
@@ -163,7 +172,7 @@ void addItems(char* pCart, char* pNewItems){
 }
 
 int getPassword(char password[]) {
-	int try = 2;
+	int try = 4;
 	int login = 0;
 	char pwInput[100];
 	while (try >= 0) {
