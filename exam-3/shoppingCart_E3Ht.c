@@ -48,14 +48,14 @@ int main() {
 	printf("\n[i] Please Enter Your Wallet Card Information.\n");
 
 	printf("\n>>Enter Your Name: ");
-	scanf("%s", &name);
+	scanf("%s", name);
 	printf("\n>>Enter Your Wallet Password: ");
-	scanf("%s", &password);
+	scanf("%s", password);
 	while (getStrLen(password) < 6) {
 		printf("\n[!] Weak Password.");
 		printf("\n[i] Password should contain at least 6 characters.");
 		printf("\n>>Enter Your Wallet Password: ");
-		scanf("%s", &password);
+		scanf("%s", password);
 	}
 	printf("\n>>Enter Your Balance: ");
 	scanf("%d", &balance);
@@ -71,7 +71,7 @@ int main() {
 	printf("\n[i] Use CODE to add into Shopping Cart.");
 	printf("\n[i] e.g., aaabbmo");
 	printf("\n>>Enter Your Shopping List: ");
-	scanf("%s", &cart);
+	scanf("%s", cart);
 	
 	do {
 		totalCost = displayCart(cart, PRODUCTS, PRICES);
@@ -97,29 +97,29 @@ int main() {
 			case 'A':
 				displayProducts(PRODUCTS, PRICES);
 				printf("\n>>Enter ITEM CODES to Add: ");
-				scanf("%s", &newItems);
+				scanf("%s", newItems);
 				addItems(&cart[0], &newItems[0]);
 				printf("\n[!] Added %d new items into cart.", getStrLen(newItems));
 				break;
 			case 'p':
 			case 'P':
-				printf("\n[%] Proceeding to next step...");
-				printf("\n[%] Checking Your Balance...");
+				printf("\n[%%] Proceeding to next step...");
+				printf("\n[%%] Checking Your Balance...");
 				if (totalCost > balance) {
 					printf("\n[!] Sorry, You don't have enough money in your wallet.");
 					printf("\n[i] Please remove some PRODUCTS you don't need.");
 				} else {
 					login = getPassword(password);
 					if (login == 1) {
-						printf("\n[%] Making payment...");
-						printf("\n[%] %d - %d", balance, totalCost);
+						printf("\n[%%] Making payment...");
+						printf("\n[%%] %d - %d", balance, totalCost);
 						balance -= totalCost;
 						displayWallet(name, password, balance);
 						printf("\n[!] Purchase Success.");
 						displayCart(cart, PRODUCTS, PRICES);
 						getCmd = 0;
 					} else {
-						printf("\n[%] Exiting from store...");
+						printf("\n[%%] Exiting from store...");
 						getCmd = 0;
 					}
 				}
@@ -177,7 +177,7 @@ int getPassword(char password[]) {
 	char pwInput[100];
 	while (try >= 0) {
 		printf("\n>>Confirm Your Wallet Password: ");
-		scanf("%s", &pwInput);
+		scanf("%s", pwInput);
 		login = 1;
 		for (int i = 0; password[i] != '\0'; i++) {
 			if (password[i] != pwInput[i]) login = 0;
