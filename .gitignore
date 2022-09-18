@@ -1,4 +1,3 @@
-*/*.exe
-*.c
 *.exe
 *.txt
+sketch.c
