@@ -1,10 +1,14 @@
+// Assignment - 4
+// Hein Thant
+// 9-18-2022
+
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
 #include "conio.h"
 
 #define MAX_USERS 100
-#define IDCODE 111
+#define IDCODE 111 // Base number for user id
 
 typedef struct User
 {
@@ -54,7 +58,7 @@ int main()
 
     while (running == 1)
     {
-        printf("\n\n{CMD}::[A]dd New User; [S]earch User; [L]ist All Users; [U]pdate User; [D]elete User; [Q]uit;");
+        printf("\n\n{CMD}::[A]dd New User; [S]earch User; [L]ist All Users; [U]pdate User; [D]elete User; [Q]uit & Save;");
         printf("\nSelect Command: ");
         scanf(" %c", &cmd);
         switch (cmd)
@@ -83,7 +87,11 @@ int main()
             if (charIn == 'n' || charIn == 'N')
             {
                 printf("\nEnter Username: ");
-                scanf("%s", searchName);
+                while (getchar() != '\n')
+                {
+                    // Clearing input text
+                };
+                gets(searchName);
                 searchId = getUserByName(users, searchName, uid);
             }
             else
@@ -95,7 +103,7 @@ int main()
 
             if (searchId < 0)
             {
-                printf("\n[ERROR]::USER NOT FOUND!");
+                printf("\n[ERR0R]::USER NOT FOUND!");
                 break;
             }
             showUserDetail(users[searchId]);
@@ -116,7 +124,7 @@ int main()
             searchId = getUserById(users, searchId, uid);
             if (searchId < 0)
             {
-                printf("\n[Error]::INVALID USER ID!");
+                printf("\n[ERR0R]::INVALID USER ID!");
                 break;
             }
             showUserDetail(users[searchId]);
@@ -132,7 +140,7 @@ int main()
             searchId = getUserById(users, searchId, uid); // get index
             if (searchId < 0)
             {
-                printf("\n[Error]::INVALID USER ID!");
+                printf("\n[ERR0R]::INVALID USER ID!");
                 break;
             }
             showUserDetail(users[searchId]);
@@ -170,7 +178,7 @@ int main()
             }
         }
     }
-    _getch();
+    getch();
     return 0;
 }
 
@@ -299,19 +307,17 @@ void showUserDetail(User user)
 void createNewUser(User *user, int id)
 {
     user->id = id;
-    // while (getchar() != '\n')
-    // {
-    //     // Clearing stdin
-    // };
+
+    while (getchar() != '\n')
+    {
+        // Clearing input text
+    };
     printf("\nEnter Username: ");
-    scanf("%s", user->name);
-    // gets(user->name);
+    gets(user->name);
     printf("\nEnter Password: ");
-    scanf("%s", user->password);
-    // gets(user->password);
+    gets(user->password);
     printf("\nEnter City: ");
-    // gets(user->city);
-    scanf("%s", user->city);
+    gets(user->city);
 
     do
     {
