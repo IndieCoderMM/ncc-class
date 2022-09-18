@@ -1,6 +1,7 @@
 // Assignment - 4
 // Hein Thant
 // 9-18-2022
+// Simple database system, store data as comma-separated values
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -8,6 +9,8 @@
 #include "conio.h"
 
 #define MAX_USERS 100
+#define MAX_CHARS 200
+#define MAX_INPUT 20
 #define IDCODE 111 // Base number for user id
 
 typedef struct User
@@ -41,17 +44,20 @@ int main()
     char cmd;
     char charIn;
     int searchId = 0;
-    char searchName[30];
+    char searchName[50];
     int running = 1;
 
-    // Load existing users' data
+    printf("// Welcome to MicroDB Service //");
+    printf("\nAuthor: hthant | Lang: C | Date: Sep 18, 2022");
+
     fptr = fopen("user_data.txt", "r");
     if (fptr == NULL)
     {
-        printf("[i]::Creating new file for database...");
+        printf("\n[i]::Creating new file for database...");
     }
     else
     {
+        // Load data into users array
         initDatabase(fptr, users, &uid);
         fclose(fptr);
     }
@@ -65,8 +71,8 @@ int main()
         {
         case 'a':
         case 'A':
-            // Get New User
             printf("\n// CREATE NEW ACCOUNT //");
+            // new id = last user id + 1 or 0
             if (uid == 0)
                 newId = IDCODE;
             else
@@ -75,7 +81,6 @@ int main()
             createNewUser(&users[uid], newId);
             printf("\n[i]::Creating New User Account...");
             printf("\n[OK]::Created {%s's account} successfully!", users[uid].name);
-
             uid++;
             break;
         case 's':
@@ -128,7 +133,7 @@ int main()
                 break;
             }
             showUserDetail(users[searchId]);
-            allocateMem(&users[searchId]);
+            // Same process as creating but replace instead new
             createNewUser(&users[searchId], IDCODE + searchId);
             printf("\n[OK]::Updated {%s's account} successfully!", users[searchId].name);
             break;
@@ -148,6 +153,7 @@ int main()
             scanf(" %c", &charIn);
             if (charIn == 'y' || charIn == 'Y')
             {
+                // Mark negative ID as deleted
                 users[searchId].id *= -1;
                 printf("\n[OK]::Deleted {%s's account} successfully!", users[searchId].name);
             }
@@ -184,11 +190,11 @@ int main()
 
 void initDatabase(FILE *fptr, User users[], int *uid)
 {
-    char strData[200];
+    char strData[MAX_CHARS];
     printf("\n+------+---------------------+---------------------+----------------+-----+------------+");
     printf("\n|  ID  |       Username      |       Password      |     Address    | Age |   Balance  |");
     printf("\n+------+---------------------+---------------------+----------------+-----+------------+");
-    while (fgets(strData, 100, fptr) != NULL)
+    while (fgets(strData, MAX_CHARS, fptr) != NULL)
     {
         if (strlen(strData) < 10)
             continue;
@@ -221,6 +227,37 @@ void loadUserData(User *user, char *strData)
         user->age = atoi(data[4]);
         user->balance = atoi(data[5]);
     }
+}
+
+void createNewUser(User *user, int id)
+{
+    user->id = id;
+
+    while (getchar() != '\n')
+    {
+        // Clearing input text
+    };
+    printf("\nEnter Username: ");
+    gets(user->name);
+    printf("\nEnter Password: ");
+    gets(user->password);
+    printf("\nEnter City: ");
+    gets(user->city);
+
+    do
+    {
+        printf("\nEnter Age: ");
+        scanf("%d", &user->age);
+        if (user->age <= 0)
+            printf("[ERROR]::INVALID AGE!");
+    } while (user->age <= 0);
+    do
+    {
+        printf("\nEnter Balance: ");
+        scanf("%d", &user->balance);
+        if (user->balance < 0)
+            printf("[ERROR]::INVALID BALANCE!");
+    } while (user->balance < 0);
 }
 
 int getUserById(User users[], int searchId, int userCount)
@@ -304,42 +341,11 @@ void showUserDetail(User user)
     printf("\n+------------------------------+");
 }
 
-void createNewUser(User *user, int id)
-{
-    user->id = id;
-
-    while (getchar() != '\n')
-    {
-        // Clearing input text
-    };
-    printf("\nEnter Username: ");
-    gets(user->name);
-    printf("\nEnter Password: ");
-    gets(user->password);
-    printf("\nEnter City: ");
-    gets(user->city);
-
-    do
-    {
-        printf("\nEnter Age: ");
-        scanf("%d", &user->age);
-        if (user->age <= 0)
-            printf("[ERROR]::INVALID AGE!");
-    } while (user->age <= 0);
-    do
-    {
-        printf("\nEnter Balance: ");
-        scanf("%d", &user->balance);
-        if (user->balance < 0)
-            printf("[ERROR]::INVALID BALANCE!");
-    } while (user->balance < 0);
-}
-
 void allocateMem(User *user)
 {
-    user->name = (char *)malloc(sizeof(char) * 20);
-    user->password = (char *)malloc(sizeof(char) * 20);
-    user->city = (char *)malloc(sizeof(char) * 40);
+    user->name = (char *)malloc(sizeof(char) * MAX_INPUT);
+    user->password = (char *)malloc(sizeof(char) * MAX_INPUT);
+    user->city = (char *)malloc(sizeof(char) * MAX_INPUT);
 }
 
 void freeMem(User *user)
