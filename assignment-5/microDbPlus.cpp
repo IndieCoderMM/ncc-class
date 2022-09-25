@@ -1,3 +1,10 @@
+//
+// Assignment-5
+// MicroDB - OOP
+// Simple database system
+// Hein Thant 9-25-2022
+//
+
 #include <iostream>
 #include <conio.h>
 #include <fstream>
@@ -202,7 +209,7 @@ int main()
             cin >> amount;
             checkPassword(users[uIndex]);
             if (users[uIndex].cashOut(amount))
-                cout << "[success]: Withdrawed $" << amount << " from balance." << endl;
+                cout << "[success]: Withdrew $" << amount << " from balance." << endl;
             else
                 cout << "[low_balance]: Amount is greater than current balance!" << endl;
             cout << "Press any key to continue..." << endl;
