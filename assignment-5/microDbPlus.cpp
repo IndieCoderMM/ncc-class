@@ -83,7 +83,6 @@ public:
 
 void getUserInfo(User *user);
 void createNewUser(User *user, bool admin);
-void initDatabase(ifstream dataFile, User users[], int *count);
 int loadUserData(User *user, string line);
 bool isValidEmail(string text);
 int generateRandNum(int min, int max);
