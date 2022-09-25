@@ -224,9 +224,9 @@ int main()
                 tempInt = searchUserById(users, tempInt, uCount);
                 if (tempInt == -1)
                     cout << "[not_found]: Please enter the correct ID!" << endl;
-                if (tempInt == users[uIndex].getId())
+                if (tempInt == uIndex)
                     cout << "[error]: Cannot transfer into your own account!" << endl;
-            } while (tempInt == -1 || tempInt == users[uIndex].getId());
+            } while (tempInt == -1 || tempInt == uIndex);
 
             cout << "Receiver : " << users[tempInt].name << endl;
             cout << "Enter amount to transfer >> ";
