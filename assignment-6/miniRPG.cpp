@@ -78,7 +78,7 @@ public:
 
     void createLevel();
     void runLevel(Player *p1);
-    int getPlayerAction();
+    void getPlayerAction();
     void levelOutcome(Player *p1);
     void nextLevel();
 };
@@ -169,6 +169,7 @@ void Game::runLevel(Player *p1)
         p1->addItem("Magic Book");
 }
 
+// Data for each level
 void Game::createLevel()
 {
     if (stage == 0)
@@ -240,9 +241,8 @@ void Game::levelOutcome(Player *p1)
     p1->gainExp(level.points[pAction].exp);
 }
 
-int Game::getPlayerAction()
+void Game::getPlayerAction()
 {
-
     pAction = getIntegerInput(1, 2, "Select your action >> ", "[e]::Invalid Action!");
     pAction -= 1;
 }
